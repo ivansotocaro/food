@@ -18,6 +18,8 @@ export class AppComponent {
 
   async ngOnInit() {
     await this.storage.create();
+    const isIntroShowed = await this.storage.get('vilaintro');
+    console.log('isIntroShowed on init:', isIntroShowed);
   }
 
 }

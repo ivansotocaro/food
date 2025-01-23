@@ -1,25 +1,54 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor() { }
+  urlServer = 'http://51.79.26.171';
+  httpHeaders = new HttpHeaders({
+    'Content-Type': 'application/json'
+  });
+
+  constructor(
+    private http: HttpClient
+  ) { }
 
   loginUserAuth(credentials: any) {
-    
+
     return new Promise((accept, reject) => {
-
-      if (credentials.email !== 'ivan@gmail.com') {
-        return reject('Usuario incorrecto');
+      // email: andreavecino@gmail.com
+      let params = {
+        "user": {...credentials}
       }
 
-      if (credentials.password !== '123456') {
-        return reject('Contraseña incorrecta');
-      }
+      this.http.post(`${this.urlServer}/login`, params, {headers: this.httpHeaders})
+      .subscribe((response: any) => {
 
-      return accept('Login correcto');
+        if(response.status !== 'OK'){
+          reject(response);
+        }
+
+        accept(response);
+
+      },
+      (error) => {
+        console.log(error);
+
+        if (error.status === 422) {
+          reject('Usuario o contraseña incorrecta');
+        }
+
+        if(error.status === 500){
+          reject('Error en el servidor');
+        }
+
+        reject('Error al iniciar sesión');
+
+      }
+      )
 
     })
 

@@ -5,6 +5,9 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { AuthService } from '../services/auth.service';
+import { NavController } from '@ionic/angular';
+
 
 
 @Component({
@@ -48,7 +51,11 @@ export class RegisterPage implements OnInit {
     ],
   };
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private navCtrl: NavController
+  ) {
 
     this.registerForm = this.formBuilder.group({
       user: ['', [Validators.required]],
@@ -67,7 +74,16 @@ export class RegisterPage implements OnInit {
   ngOnInit() {}
 
   registerUser(credentials: any) {
-    console.log(credentials);
+
+    this.authService.register(credentials).then((response) => {
+      console.log(response);
+      this.errorMessage = '';
+      this.navCtrl.navigateForward('/login');
+    }).catch((error) => {
+      console.log(error, ' error');
+      this.errorMessage = error;
+    });
+
   }
 
 }

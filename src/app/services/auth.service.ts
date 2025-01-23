@@ -54,4 +54,50 @@ export class AuthService {
 
   }
 
+  register(data: any) {
+
+    return new Promise((accept, reject) => {
+
+      let params = {
+        user: {
+          email: data.email,
+          password: data.password,
+          password_confirmation: data.passwordConfirmation,
+          name: data.name,
+          last_name: data.lastname,
+          username: data.user,
+        },
+      };
+
+
+      this.http
+        .post(`${this.urlServer}/signup`, params, { headers: this.httpHeaders })
+        .subscribe(
+          (response: any) => {
+            if (response.status !== 'OK') {
+              reject(response);
+            }
+
+            accept(response);
+          },
+          (error) => {
+            console.log(error);
+
+            if (error.status === 422) {
+              reject(error.error.errors);
+            }
+
+            if (error.status === 500) {
+              reject('Error en el servidor');
+            }
+
+            reject('Error al intentar registrarse');
+          }
+        );
+
+
+    })
+
+  }
+
 }

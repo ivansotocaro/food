@@ -1,19 +1,35 @@
 <ion-header>
-
   <ion-toolbar>
-
     <ion-buttons>
-
       <ion-menu-button></ion-menu-button>
-
     </ion-buttons>
-
   </ion-toolbar>
-
 </ion-header>
 
 <ion-content >
-  Hola soy el home
+
+  <ion-list>
+    <ion-card *ngFor="let post of posts">
+      <img src="{{post.image}}" alt="Post Image" class="centered-image">
+
+      <ion-card-header>
+        <ion-card-subtitle>
+          <ion-avatar class="centered-avatar-user ">
+            <img
+            [src]="post.user.image ? post.user.image : 'assets/img/user.jpg'"
+            alt="Post Image" />
+          </ion-avatar>
+          {{post.user.name}}
+        </ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-card-content>
+        {{post.description}}
+      </ion-card-content>
+
+    </ion-card>
+  </ion-list>
+
 </ion-content>
 
 

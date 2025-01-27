@@ -1,38 +1,160 @@
-swiper-container {
-  width: 100%;
-  height: 100%;
+/* Contenedor principal */
+.content-container {
+  --ion-background-color: #f9f9f9; /* Fondo claro para todo el contenido */
 }
 
-swiper-slide {
+.toolbar-background{
+  background-color:red;
+}
+/* Estilos para el ion-card */
+.post-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  margin-bottom: 20px;
+  overflow: hidden;
+  transition: box-shadow 0.3s ease;
+  border: none;
+  width: 70%;
+}
+
+/* Efecto de hover */
+.post-card:hover {
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Cabecera del post (información del usuario) */
+.post-header {
+  padding: 5px;
+  background-color: #ffffff; /* Blanco para la cabecera */
   display: flex;
-  flex-direction: column;
+  align-items: start;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+/* Información del usuario */
+.user-info {
+  display: flex;
   align-items: center;
-  justify-content: center;
-  background-color: aqua;
+  font-family: 'Arial', sans-serif;
 }
 
-.title1 {
-  color: red;
+.user-avatar {
+  margin-right: 12px;
+  display: flex;
+  justify-content:center;
+  align-items: center;
 }
 
-.bg-color-slide {
-  background-color: rgb(0, 255, 34);
-}
-
-img {
-  max-width: 80%;
-  max-height: 80%;
-}
-
-.centered-image {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 100%; /* Ajusta el ancho según sea necesario */
-  max-width: 100%; /* Asegura que la imagen no exceda el ancho del contenedor */
-}
-
-.centered-avatar-user {
+.user-avatar img {
   width: 40px;
   height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user-name {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333; /* Color oscuro para el nombre */
+  text-transform: capitalize;
+}
+
+/* Imagen de la publicación */
+.post-image {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.post-image:hover {
+  transform: scale(1.05);
+}
+
+/* Contenido de la publicación */
+.post-content {
+  padding: 15px;
+  font-family: 'Arial', sans-serif;
+}
+
+.post-description {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #444;
+  margin: 0;
+  word-wrap: break-word;
+  text-align: justify;
+  background-color: #f9f9f9; /* Fondo suave para la descripción */
+  padding: 10px;
+  border-radius: 8px;
+}
+
+/* Pie de página del post (acciones) */
+.post-footer {
+  padding: 10px 15px;
+  display: flex;
+  justify-content: space-between;
+  background-color: #f9f9f9; /* Gris claro para el pie de página */
+  border-top: 1px solid #e0e0e0;
+}
+
+.action-button {
+  padding: 6px 12px;
+  font-size: 14px;
+  background-color: #d9534f; /* Rojo para botones de acción */
+  color: #fff;
+  border-radius: 20px;
+  border: none;
+  text-transform: uppercase;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.action-button:hover {
+  background-color: #c9302c; /* Rojo más oscuro al pasar el ratón */
+}
+
+
+ion-list{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+}
+
+ion-fab {
+  ion-fab-button {
+    --background: #c9302c; /* Rojo para el botón flotante */
+  }
+}
+
+/* Estilos responsivos para dispositivos pequeños */
+@media (max-width: 768px) {
+  .post-card {
+    margin-bottom: 15px;
+  }
+
+  .post-image {
+    height: 200px;
+  }
+
+  .user-avatar img {
+    width: 35px;
+    height: 35px;
+  }
+
+  .user-name {
+    font-size: 14px;
+  }
+
+  .post-description {
+    font-size: 14px;
+  }
+
+  .action-button {
+    padding: 5px 10px;
+    font-size: 12px;
+  }
 }

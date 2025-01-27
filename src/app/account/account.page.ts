@@ -15,6 +15,7 @@ defineCustomElements(window);
 export class AccountPage implements OnInit {
 
   user_data: any = {
+    username: '',
     name: '',
     email: '',
     phone: '',
@@ -28,7 +29,7 @@ export class AccountPage implements OnInit {
   async ngOnInit() {
 
     let {id}: any = await this.storage.get('user');
-    console.log(id + ' account');
+
     this.userService.getUsers(id)
     .then((response: any) => {
 
@@ -50,7 +51,6 @@ export class AccountPage implements OnInit {
       quality: 100,
     });
 
-    console.log(capturePhone.dataUrl);
     this.user_data.image = capturePhone.dataUrl;
     this.updateUser();
   }

@@ -6,12 +6,32 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-title>{{ user_data.name }} {{ user_data.last_name }}</ion-title>
-  <ion-avatar (click)="takePhone()">
-    <img [src]="user_data.image" alt="imagen de perfil" />
-  </ion-avatar>
-  <p>Usuario: {{ '@' + user_data.username }}</p>
-  <p>Seguidores: {{ user_data.followed_users.length }}</p>
-  <p>Seguidos: {{ user_data.following_users.length }}</p>
+<ion-content class="ion-padding profile-page">
+  <div class="profile-container">
+    <ion-avatar class="profile-avatar" (click)="takePhone()">
+      <img [src]="user_data.image ?? 'assets/img/profile.png' " alt="imagen de perfil" />
+    </ion-avatar>
+
+    <ion-title class="profile-name">
+      {{ user_data.name }} {{ user_data.last_name }}
+    </ion-title>
+
+    <p class="profile-username">{{ '@' + user_data.username }}</p>
+
+    <div class="profile-stats">
+      <div class="stat-item">
+        <ion-label>Seguidores</ion-label>
+        <span>{{ user_data.followed_users.length }}</span>
+      </div>
+      <div class="stat-item">
+        <ion-label>Seguidos</ion-label>
+        <span>{{ user_data.following_users.length }}</span>
+      </div>
+    </div>
+
+    <ion-button expand="block" color="danger" >
+      Editar Perfil
+    </ion-button>
+  </div>
 </ion-content>
+

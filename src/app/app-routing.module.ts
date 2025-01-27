@@ -34,6 +34,10 @@ const routes: Routes = [
     import('./menu/menu.module').then((m) => m.MenuPageModule),
     canActivate: [LoginGuard, IntroGuard],
   },
+  {
+    path: 'add-post-modal',
+    loadChildren: () => import('./add-post-modal/add-post-modal.module').then( m => m.AddPostModalPageModule)
+  },
 
 ];
 

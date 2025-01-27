@@ -54,14 +54,12 @@ export class LoginPage implements OnInit {
 
     this.authService.loginUserAuth(credentials)
     .then((rest: any) => {
-      console.log(rest, " Rest");
       this.errorMessage = '';
       this.storage.set('user', rest.user);
       this.navCtrl.navigateForward('/menu/home');
       this.storage.set('isUserLoggedIn', true);
     })
     .catch((error) => {
-      console.log(error, ' error');
       this.errorMessage = error;
     })
 

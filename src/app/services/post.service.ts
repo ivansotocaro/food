@@ -36,4 +36,26 @@ export class PostService {
 
   }
 
+  createPost(post_data:  any) {
+
+    return new Promise((accept, reject) => {
+      this.http.post(`${this.urlServer}/posts`, post_data, {headers: this.httpHeaders,}).subscribe(
+          (response: any) => {
+            accept(response);
+          },
+          (error) => {
+            console.log(error + ' error');
+
+            if (error.status === 500) {
+              reject('Error en el servidor');
+            }
+
+            reject('Error al crear el Post');
+          }
+        );
+    });
+
+  }
+
+
 }

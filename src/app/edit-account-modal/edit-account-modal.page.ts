@@ -13,6 +13,10 @@ import {
   Validators,
 } from '@angular/forms';
 import { defineCustomElements } from '@ionic/pwa-elements/loader';
+import { UserService } from '../services/user.service';
+import { Storage } from '@ionic/storage-angular';
+
+
 defineCustomElements(window);
 
 
@@ -23,6 +27,8 @@ defineCustomElements(window);
   standalone: false,
 })
 export class EditAccountModalPage implements OnInit {
+  user: any = {};
+  accuont_image: any;
   editFormAccount: FormGroup;
 
   formErrors = {
@@ -40,12 +46,14 @@ export class EditAccountModalPage implements OnInit {
         message: 'El apellido debe tener al menos 3 caracteres',
       },
     ],
-    image: [{ type: 'required', message: 'La imagen es obligatoria' }],
+    image: new FormControl(''),
   };
 
   constructor(
     private formBuilder: FormBuilder,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private userService: UserService,
+    private storage: Storage
   ) {
     this.editFormAccount = this.formBuilder.group({
       name: new FormControl(
@@ -60,10 +68,50 @@ export class EditAccountModalPage implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  async ngOnInit() {
+    this.user = await this.storage.get('user');
+    this.accuont_image = this.user.image;
 
-  EditAccount(edit_data: any){
-    console.log(edit_data)
+    if (this.accuont_image) {
+      this.editFormAccount.get('image')?.clearValidators();
+      this.editFormAccount.get('image')?.updateValueAndValidity();
+    }
+
+  }
+
+  async uploadPhotoAccount() {
+    const uploadPhoto = await Camera.getPhoto({
+      resultType: CameraResultType.DataUrl,
+      source: CameraSource.Photos,
+      quality: 100,
+    });
+
+    this.accuont_image = uploadPhoto.dataUrl;
+    this.editFormAccount.patchValue({
+      image: this.accuont_image,
+    });
+  }
+
+  async EditAccount(edit_data: any) {
+    const { id } = await this.storage.get('user');
+
+    const edit_params = {
+      ...edit_data,
+      image: this.accuont_image || edit_data.image,
+      id,
+    };
+
+    this.userService
+      .updateAccount(edit_params)
+      .then((response: any) => {
+        console.log(response);
+        this.modalController.dismiss({
+          null: null,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   closeModal() {

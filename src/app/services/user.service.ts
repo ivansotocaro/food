@@ -1,54 +1,57 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Storage } from '@ionic/storage-angular';
 
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-
   urlServer = 'http://51.79.26.171';
   httpHeaders = new HttpHeaders({
     'Content-Type': 'application/json',
   });
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private storage: Storage) {}
 
   getUsers(id: any) {
-
     return new Promise((accept, reject) => {
+      this.http
+        .get(`${this.urlServer}/current_user/${id}`, {
+          headers: this.httpHeaders,
+        })
+        .subscribe(
+          (response: any) => {
+            accept(response);
+          },
+          (error) => {
+            console.log(error + +' error');
 
-      this.http.get(`${this.urlServer}/current_user/${id}`, { headers: this.httpHeaders }).subscribe(
-        (response: any) => {
-          accept(response);
-        },
-        (error) => {
-          console.log(error + + ' error');
+            if (error.status === 500) {
+              reject('Error en el servidor');
+            }
 
-          if (error.status === 500) {
-            reject('Error en el servidor');
+            reject('Error al obtener los Usuario');
           }
-
-          reject('Error al obtener los Usuario');
-        }
-      );
-
+        );
     });
-
   }
 
   updateUser(user: any) {
     const user_params = {
-      user
-    }
-    return new Promise((accept, reject) => {
+      user,
+    };
+    console.log('funcion edit accon service');
 
+    return new Promise((accept, reject) => {
       this.http
         .post(`${this.urlServer}/update/${user.id}`, user_params, {
           headers: this.httpHeaders,
         })
         .subscribe(
           (response: any) => {
+
+
             accept(response);
           },
           (error) => {
@@ -61,16 +64,39 @@ export class UserService {
             reject('Error al actualizar los Usuario');
           }
         );
+    });
+  }
 
+  updateAccount(user: any) {
+    const user_params = {
+      user,
+    };
+    return new Promise((accept, reject) => {
+      this.http
+        .post(`${this.urlServer}/update/${user.id}`, user_params, {
+          headers: this.httpHeaders,
+        })
+        .subscribe(
+          (response: any) => {
+
+            this.storage.set('user', response.user);
+            accept(response);
+          },
+          (error) => {
+            console.log(error + ' error');
+
+            if (error.status === 500) {
+              reject('Error en el servidor');
+            }
+
+            reject('Error al actualizar los Usuario');
+          }
+        );
     });
   }
 
   listUsers(page: number, perPage: number, query: string = '') {
-
     const url = `${this.urlServer}/list_users?page=${page}&per_page=${perPage}&query=${query}`;
     return this.http.get(url).toPromise();
-
   }
-
-
 }

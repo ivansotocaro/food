@@ -13,8 +13,8 @@
   <form [formGroup]="editFormAccount" (ngSubmit)="EditAccount(editFormAccount.value)" class="form-container">
 
     <!-- Circular Image Upload -->
-    <div class="image-upload" >
-      <img src="assets/img/no-image.avif" alt="Profile Image" class="profile-image" />
+    <div class="image-upload" (click)="uploadPhotoAccount()">
+      <img [src]="accuont_image ?? 'assets/img/no-image.avif'" alt="Profile Image" class="profile-image" />
       <p class="upload-text">Tap to upload image</p>
     </div>
 
@@ -22,7 +22,7 @@
 
     <ion-item lines="inset">
       <ion-label position="floating">Name</ion-label>
-      <ion-input formControlName="name"></ion-input>
+      <ion-input formControlName="name" [(ngModel)]="user.name"></ion-input>
     </ion-item>
 
     <div class="error-messages">
@@ -36,7 +36,7 @@
     <!-- Lastname Field -->
     <ion-item lines="inset">
       <ion-label position="floating">Last Name</ion-label>
-      <ion-input formControlName="last_name"></ion-input>
+      <ion-input formControlName="last_name" [(ngModel)]="user.last_name"></ion-input>
     </ion-item>
 
     <div class="error-messages">
@@ -52,7 +52,6 @@
         <ion-button
           color="danger"
           type="submit"
-          [disabled]="!editFormAccount.valid"
           expand="block"
           fill="solid"
           class="submit-button"

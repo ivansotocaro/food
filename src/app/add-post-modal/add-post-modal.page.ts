@@ -73,27 +73,30 @@ export class AddPostModalPage implements OnInit {
   }
 
   async addPost(post_data: any) {
-
     const { id } = await this.storage.get('user');
 
     const post_params = {
       post: {
         description: post_data.description,
         image: post_data.image,
-        user_id: id
-      }
-    }
+        user_id: id,
+      },
+    };
 
-    this.postService.createPost(post_params)
+    this.postService
+      .createPost(post_params)
       .then((response: any) => {
         console.log(response);
         this.modalController.dismiss({
-          null: null
+          null: null,
         });
       })
       .catch((error) => {
         console.log(error);
       });
+  }
 
+  closeModal() {
+    this.modalController.dismiss({ null: null });
   }
 }

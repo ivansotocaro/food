@@ -3,6 +3,8 @@ import { UserService } from '../services/user.service';
 import { Storage } from '@ionic/storage-angular';
 import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
 import { defineCustomElements } from '@ionic/pwa-elements/loader';
+import { ModalController } from '@ionic/angular';
+import { EditAccountModalPage } from '../edit-account-modal/edit-account-modal.page';
 
 defineCustomElements(window);
 
@@ -13,7 +15,6 @@ defineCustomElements(window);
   standalone: false,
 })
 export class AccountPage implements OnInit {
-
   user_data: any = {
     username: '',
     name: '',
@@ -22,29 +23,29 @@ export class AccountPage implements OnInit {
     address: '',
     followed_users: [],
     following_users: [],
-  }
+  };
 
-  constructor(private userService: UserService, private storage: Storage) {}
+  constructor(
+    private userService: UserService,
+    private storage: Storage,
+    private modalController: ModalController
+  ) {}
 
   async ngOnInit() {
+    let { id }: any = await this.storage.get('user');
 
-    let {id}: any = await this.storage.get('user');
-
-    this.userService.getUsers(id)
-    .then((response: any) => {
-
-      this.storage.set('user', response);
-      this.user_data = response;
-    }).catch((error) => {
-
-      console.log(error);
-
-    });
-
+    this.userService
+      .getUsers(id)
+      .then((response: any) => {
+        this.storage.set('user', response);
+        this.user_data = response;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   async takePhone() {
-
     const capturePhone = await Camera.getPhoto({
       resultType: CameraResultType.DataUrl,
       source: CameraSource.Camera,
@@ -55,21 +56,27 @@ export class AccountPage implements OnInit {
     this.updateUser();
   }
 
-
   async updateUser() {
-
-    this.userService.updateUser(this.user_data)
-    .then((response: any) => {
-      console.log(response);
-      // this.storage.set('user', response);
-      // this.user_data = response;
-    }).catch((error) => {
-
-      console.log(error);
-
-    });
-
+    this.userService
+      .updateUser(this.user_data)
+      .then((response: any) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
+
+  async editAccount(){
+
+    const modal = await this.modalController.create({
+      component: EditAccountModalPage ,
+      componentProps: {},
+    });
+
+    return await modal.present();
+
+  }
 
 }

@@ -13,11 +13,11 @@ export class PostService {
 
   constructor(private http: HttpClient) {}
 
-  getPosts() {
+  getPosts(page: number, perPage: number) {
 
     return new Promise((accept, reject) => {
 
-      this.http.get(`${this.urlServer}/posts`, { headers: this.httpHeaders }).subscribe(
+      this.http.get(`${this.urlServer}/posts?page=${page}&perPage=${perPage} `, { headers: this.httpHeaders }).subscribe(
         (response: any) => {
           accept(response);
         },

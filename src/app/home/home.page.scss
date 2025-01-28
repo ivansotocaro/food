@@ -1,3 +1,14 @@
+ion-buttons{
+  ion-menu-button{
+    --color: red;
+  }
+}
+
+ion-buttons{
+  ion-menu-button{
+    --color: red;
+  }
+}
 /* Contenedor principal */
 .content-container {
   --ion-background-color: #f9f9f9; /* Fondo claro para todo el contenido */
@@ -134,6 +145,7 @@ ion-fab {
 @media (max-width: 768px) {
   .post-card {
     margin-bottom: 15px;
+    width: 90%;
   }
 
   .post-image {

@@ -11,33 +11,50 @@ import { AddPostModalPage } from '../add-post-modal/add-post-modal.page';
   standalone: false,
 })
 export class HomePage {
+  posts: any[] = [];
+  page: number = 1;
+  limit: number = 10;
+  hasMore: boolean = true;
+
   constructor(
     private postService: PostService,
     private modalController: ModalController
   ) {}
 
-  posts: any;
   ngOnInit() {
-    this.postService
-      .getPosts()
-      .then((response: any) => {
-        console.log(response);
-        this.posts = response;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    this.loadPost();
   }
 
   async addPost() {
-
     const modal = await this.modalController.create({
       component: AddPostModalPage,
       componentProps: {},
     });
 
     return await modal.present();
-
   }
 
+  loadPost(event?: any) {
+    this.postService.getPosts(this.page, this.limit).then(
+      (response: any) => {
+        if (response.length > 0) {
+          this.posts = [...this.posts, ...response];
+          this.page++;
+        } else {
+          this.hasMore = false;
+        }
+
+        if (event) {
+          event.target.complete();
+        }
+      },
+      (error) => {
+        console.log(error);
+
+        if (event) {
+          event.target.complete();
+        }
+      }
+    );
+  }
 }

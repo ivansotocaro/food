@@ -38,6 +38,11 @@ const routes: Routes = [
     path: 'add-post-modal',
     loadChildren: () => import('./add-post-modal/add-post-modal.module').then( m => m.AddPostModalPageModule)
   },
+  {
+    path: 'edit-account-modal',
+    loadChildren: () => import('./edit-account-modal/edit-account-modal.module').then( m => m.EditAccountModalPageModule)
+  },
+  
 
 ];
 

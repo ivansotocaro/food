@@ -1,0 +1,66 @@
+<ion-header>
+  <ion-toolbar color="danger">
+    <ion-title>Edit Profile</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="closeModal()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="editFormAccount" (ngSubmit)="EditAccount(editFormAccount.value)" class="form-container">
+
+    <!-- Circular Image Upload -->
+    <div class="image-upload" >
+      <img src="assets/img/no-image.avif" alt="Profile Image" class="profile-image" />
+      <p class="upload-text">Tap to upload image</p>
+    </div>
+
+    <!-- Name Field -->
+
+    <ion-item lines="inset">
+      <ion-label position="floating">Name</ion-label>
+      <ion-input formControlName="name"></ion-input>
+    </ion-item>
+
+    <div class="error-messages">
+      <ng-container *ngFor="let error of formErrors.name">
+        <ion-text color="danger" *ngIf="editFormAccount.get('name')?.hasError(error.type) && editFormAccount.get('name')?.dirty">
+          {{ error.message }}
+        </ion-text>
+      </ng-container>
+    </div>
+
+    <!-- Lastname Field -->
+    <ion-item lines="inset">
+      <ion-label position="floating">Last Name</ion-label>
+      <ion-input formControlName="last_name"></ion-input>
+    </ion-item>
+
+    <div class="error-messages">
+      <ng-container *ngFor="let error of formErrors.last_name">
+        <ion-text color="danger" *ngIf="editFormAccount.get('last_name')?.hasError(error.type) && editFormAccount.get('last_name')?.dirty">
+          {{ error.message }}
+        </ion-text>
+      </ng-container>
+    </div>
+
+    <!-- Submit Button -->
+    <ion-footer class="form-footer" >
+        <ion-button
+          color="danger"
+          type="submit"
+          [disabled]="!editFormAccount.valid"
+          expand="block"
+          fill="solid"
+          class="submit-button"
+        >
+        Save Changes
+      </ion-button>
+    </ion-footer>
+
+  </form>
+</ion-content>
+

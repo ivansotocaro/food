@@ -25,7 +25,21 @@ export class MenuPage implements OnInit {
   logOut() {
     this.storage.remove('isUserLoggedIn');
     this.navCrtl.navigateRoot('/login');
-    this.menu.close
+    this.closeMenu();
   }
 
+  searchUser() {
+    this.navCrtl.navigateRoot('/menu/search-users');
+    this.closeMenu();
+  }
+
+  account() {
+    this.navCrtl.navigateRoot('/menu/account');
+    this.closeMenu();
+  }
+
+  home() {
+    this.navCrtl.navigateRoot('/menu/home');
+    this.closeMenu();
+  }
 }

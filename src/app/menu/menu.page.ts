@@ -10,13 +10,19 @@ import { Storage } from '@ionic/storage-angular';
   standalone: false,
 })
 export class MenuPage implements OnInit {
+
+  user: any = {};
+
   constructor(
     private menu: MenuController,
     private navCrtl: NavController,
     private storage: Storage
   ) {}
 
-  ngOnInit() {}
+  async ngOnInit() {
+    this.user = await this.storage.get('user');
+    console.log(this.user)
+  }
 
   closeMenu() {
     this.menu.close();

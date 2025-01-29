@@ -1,3 +1,36 @@
 .button-inner {
   color: red !important;
 }
+
+.profile-item {
+  --padding-start: 12px;
+  border-radius: 10px;
+  background: var(--ion-color-light);
+  margin: 10px 0;
+}
+
+.user-avatar img {
+  border-radius: 50%;
+  border: 2px solid var(--ion-color-danger);
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.username {
+  font-weight: bold;
+  font-size: 18px;
+  margin: 0;
+}
+
+.user-role {
+  color: var(--ion-color-medium);
+  font-size: 14px;
+  margin: 0;
+}
+
+
+

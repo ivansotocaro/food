@@ -8,12 +8,13 @@
 
 <ion-content class="content-container">
   <ion-list>
+    <ion-progress-bar type="indeterminate" color="danger" *ngIf="isLoading" ></ion-progress-bar>
     <ion-card *ngFor="let post of posts" class="post-card">
 
       <ion-card-header class="post-header">
         <div class="user-info">
           <ion-avatar class="user-avatar">
-            <img [src]="post.user.image ? post.user.image : 'assets/img/user.jpg'" alt="User Avatar" />
+            <img [src]="post?.user?.image ?? 'assets/img/user.jpg'" alt="User Avatar" />
           </ion-avatar>
           <span class="user-name">{{post.user.name}}</span>
         </div>

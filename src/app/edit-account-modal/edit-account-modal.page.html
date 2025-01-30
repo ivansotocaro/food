@@ -13,7 +13,7 @@
   <form [formGroup]="editFormAccount" (ngSubmit)="EditAccount(editFormAccount.value)" class="form-container">
 
     <!-- Circular Image Upload -->
-    <div class="image-upload" (click)="uploadPhotoAccount()">
+    <div class="image-upload" (click)="presentPhotoOptions()">
       <img [src]="accuont_image ?? 'assets/img/no-image.avif'" alt="Profile Image" class="profile-image" />
       <p class="upload-text">Toque para cargar la imagen</p>
     </div>

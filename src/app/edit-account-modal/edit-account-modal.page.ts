@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import {
   Camera,
   CameraResultType,
@@ -53,7 +53,8 @@ export class EditAccountModalPage implements OnInit {
     private formBuilder: FormBuilder,
     private modalController: ModalController,
     private userService: UserService,
-    private storage: Storage
+    private storage: Storage,
+    public alertController: AlertController
   ) {
     this.editFormAccount = this.formBuilder.group({
       name: new FormControl(
@@ -76,13 +77,12 @@ export class EditAccountModalPage implements OnInit {
       this.editFormAccount.get('image')?.clearValidators();
       this.editFormAccount.get('image')?.updateValueAndValidity();
     }
-
   }
 
-  async uploadPhotoAccount() {
+  async uploadPhotoAccount(source: CameraSource) {
     const uploadPhoto = await Camera.getPhoto({
       resultType: CameraResultType.DataUrl,
-      source: CameraSource.Photos,
+      source: source,
       quality: 100,
     });
 
@@ -90,6 +90,36 @@ export class EditAccountModalPage implements OnInit {
     this.editFormAccount.patchValue({
       image: this.accuont_image,
     });
+  }
+
+  async presentPhotoOptions() {
+    const alert = await this.alertController.create({
+      header: 'Seleccione una opción',
+      message: '¿De dónde desea obtener la imagen?',
+      buttons: [
+        {
+          text: 'Cámara',
+          handler: () => {
+            this.uploadPhotoAccount(CameraSource.Camera);
+          },
+        },
+        {
+          text: 'Galeria',
+          handler: () => {
+            this.uploadPhotoAccount(CameraSource.Photos);
+          },
+        },
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancelado');
+          },
+        },
+      ],
+    });
+
+    await alert.present();
   }
 
   async EditAccount(edit_data: any) {
@@ -104,7 +134,7 @@ export class EditAccountModalPage implements OnInit {
     this.userService
       .updateAccount(edit_params)
       .then((response: any) => {
-        console.log(response);
+
         this.modalController.dismiss({
           null: null,
         });

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 
@@ -12,6 +12,8 @@ export class PostService {
   });
 
   constructor(private http: HttpClient) {}
+
+  postCreated: EventEmitter<any> = new EventEmitter();
 
   getPosts(page: number, perPage: number) {
 
@@ -42,6 +44,8 @@ export class PostService {
       this.http.post(`${this.urlServer}/posts`, post_data, {headers: this.httpHeaders,}).subscribe(
           (response: any) => {
             accept(response);
+            
+            this.postCreated.emit(response);
           },
           (error) => {
             console.log(error + ' error');

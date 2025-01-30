@@ -73,13 +73,13 @@ export class AddPostModalPage implements OnInit {
   }
 
   async addPost(post_data: any) {
-    const { id } = await this.storage.get('user');
+    const user = await this.storage.get('user');
 
     const post_params = {
       post: {
         description: post_data.description,
         image: post_data.image,
-        user_id: id,
+        user_id: user.id,
       },
     };
 
@@ -87,6 +87,14 @@ export class AddPostModalPage implements OnInit {
       .createPost(post_params)
       .then((response: any) => {
         console.log(response);
+        response.user = {
+          id: user.id,
+          name: user.name,
+          image: user.image || 'assets/img/user.jpg',
+        }
+        this.postService.postCreated.emit(response);
+        this.addPostForm.reset();
+        this.post_image = null;
         this.modalController.dismiss({
           null: null,
         });

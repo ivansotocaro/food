@@ -38,10 +38,8 @@
         size="small"
         (click)="toggleFollow(user)">
         <ion-icon
-          slot="start"
           [name]="user.is_following ? 'heart-dislike-outline' : 'heart-outline'">
         </ion-icon>
-        {{ user.is_following ? 'Dejar de seguir' : 'Seguir' }}
       </ion-button>
     </ion-item>
   </ion-list>

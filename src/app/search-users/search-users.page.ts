@@ -10,7 +10,6 @@ import { Storage } from '@ionic/storage-angular';
   standalone: false,
 })
 export class SearchUsersPage implements OnInit {
-
   users: any[] = [];
   page: number = 1;
   limit: number = 10;
@@ -25,22 +24,22 @@ export class SearchUsersPage implements OnInit {
   }
 
   async loadUser(event?: any) {
-
     this.current_user = await this.storage.get('user');
     const followingUser = this.current_user.followees || [];
 
-    this.userService.listUsers(this.page, this.limit, this.query)
+    this.userService
+      .listUsers(this.page, this.limit, this.query)
       .then((response: any) => {
-
         if (response.users.length > 0) {
           const updateUser = response.users.map((user: any) => ({
-              ...user,
-              is_following: followingUser.some((followedUser: any) => followedUser.id = user.id)
-          }))
+            ...user,
+            is_following: followingUser.some(
+              (followedUser: any) => followedUser.id == user.id
+            ),
+          }));
+
           this.users = [...this.users, ...updateUser];
-
           this.page++;
-
         } else {
           this.hasMoreUsers = false;
         }
@@ -64,7 +63,6 @@ export class SearchUsersPage implements OnInit {
   }
 
   follow(followee_id: any) {
-
     const user_id = this.current_user.id;
     this.userService
       .followUser(user_id, followee_id)
@@ -83,24 +81,35 @@ export class SearchUsersPage implements OnInit {
       .catch((error) => {
         console.log(error);
       });
-
   }
 
-  unfollow(userID: any) {
-    console.log(userID)
+  unfollow(followee_id: any) {
+    const user_id = this.current_user.id;
+    this.userService
+      .unfollowUser(user_id, followee_id)
+      .then((data: any) => {
+        console.log(data);
+        this.users = this.users.map((user: any) => {
+          if (user.id == followee_id) {
+            return {
+              ...user,
+              is_following: false,
+            };
+          }
+          return user;
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
-
 
   toggleFollow(user: any) {
-    
+
     if (user.is_following) {
       this.unfollow(user.id);
-    }else{
+    } else {
       this.follow(user.id);
     }
-
   }
-
-
-
 }

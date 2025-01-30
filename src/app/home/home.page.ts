@@ -11,10 +11,13 @@ import { AddPostModalPage } from '../add-post-modal/add-post-modal.page';
   standalone: false,
 })
 export class HomePage {
+
   posts: any[] = [];
   page: number = 1;
   limit: number = 10;
   hasMore: boolean = true;
+
+  isLoading: boolean = false;
 
   constructor(
     private postService: PostService,
@@ -23,6 +26,9 @@ export class HomePage {
 
   ngOnInit() {
     this.loadPost();
+    this.postService.postCreated.subscribe((newPost:any) => {
+      this.posts.unshift(newPost);
+    })
   }
 
   async addPost() {
@@ -35,6 +41,8 @@ export class HomePage {
   }
 
   loadPost(event?: any) {
+
+    this.isLoading = true;
     this.postService.getPosts(this.page, this.limit).then(
       (response: any) => {
         if (response.length > 0) {
@@ -44,13 +52,15 @@ export class HomePage {
           this.hasMore = false;
         }
 
+        this.isLoading = false;
+
         if (event) {
           event.target.complete();
         }
       },
       (error) => {
         console.log(error);
-
+        this.isLoading = false;
         if (event) {
           event.target.complete();
         }

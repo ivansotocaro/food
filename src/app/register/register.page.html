@@ -1,6 +1,9 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Registro</ion-title>
+    <ion-button slot="end" class="custom-button" fill="clear" color="danger" (click)="resetLogin()">
+      <ion-icon name="close-outline" class="custom-icon"></ion-icon>
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 
@@ -11,7 +14,7 @@
 
         <!-- User -->
         <ion-item>
-          <ion-input label="User" labelPlacement="floating" formControlName="user"></ion-input>
+          <ion-input label="Usuario" labelPlacement="floating" formControlName="user"></ion-input>
         </ion-item>
 
         <div>
@@ -24,7 +27,7 @@
 
         <!-- Name -->
         <ion-item>
-          <ion-input label="Name" labelPlacement="floating" formControlName="name"></ion-input>
+          <ion-input label="Nombre" labelPlacement="floating" formControlName="name"></ion-input>
         </ion-item>
 
         <div>
@@ -37,7 +40,7 @@
 
         <!-- Lastname -->
         <ion-item>
-          <ion-input label="Lastname" labelPlacement="floating" formControlName="lastname"></ion-input>
+          <ion-input label="Apellido" labelPlacement="floating" formControlName="lastname"></ion-input>
         </ion-item>
 
         <div>
@@ -50,7 +53,7 @@
 
         <!-- Email -->
         <ion-item>
-          <ion-input label="Email" labelPlacement="floating" placeholder="Example@gmial.com" formControlName="email"></ion-input>
+          <ion-input label="Correo" labelPlacement="floating" placeholder="Example@gmial.com" formControlName="email"></ion-input>
         </ion-item>
 
         <div>
@@ -63,7 +66,7 @@
 
         <!-- Password -->
         <ion-item>
-          <ion-input label="Password" type="password" labelPlacement="floating" placeholder="******" formControlName="password"></ion-input>
+          <ion-input label="Contraseña" type="password" labelPlacement="floating" placeholder="******" formControlName="password"></ion-input>
         </ion-item>
 
         <div>
@@ -76,7 +79,7 @@
 
         <!-- Password Confirmation -->
         <ion-item>
-          <ion-input label="Password Confirmation" type="password" labelPlacement="floating" placeholder="******" formControlName="passwordConfirmation"></ion-input>
+          <ion-input label="Confirmar contraseña" type="password" labelPlacement="floating" placeholder="******" formControlName="passwordConfirmation"></ion-input>
         </ion-item>
 
         <div>

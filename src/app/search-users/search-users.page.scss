@@ -3,3 +3,46 @@ ion-buttons{
     --color: red;
   }
 }
+
+
+.custom-searchbar {
+  --background: #f2f2f2;
+  --color: #555;
+  border-radius: 10px;
+  margin: 10px;
+}
+
+.custom-list {
+  margin: 0 10px;
+}
+
+.custom-item {
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  margin: 5px 0;
+  padding: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.custom-item:hover {
+  transform: translateY(-3px);
+}
+
+.user-name {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.user-detail {
+  font-size: 14px;
+  color: gray;
+  margin-top: 2px;
+}
+
+ion-button {
+  --border-radius: 20px;
+  --padding-start: 8px;
+  --padding-end: 8px;
+  font-size: 14px;
+}

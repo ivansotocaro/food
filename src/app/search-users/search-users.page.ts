@@ -10,13 +10,15 @@ import { Storage } from '@ionic/storage-angular';
   standalone: false,
 })
 export class SearchUsersPage implements OnInit {
+
   users: any[] = [];
   page: number = 1;
   limit: number = 10;
   query: string = '';
   hasMoreUsers: boolean = true;
+  current_user: any;
 
-  constructor(private UserService: UserService, private storage: Storage) {}
+  constructor(private userService: UserService, private storage: Storage) {}
 
   ngOnInit() {
     this.loadUser();
@@ -24,19 +26,21 @@ export class SearchUsersPage implements OnInit {
 
   async loadUser(event?: any) {
 
-    const currentUser = await this.storage.get('user');
-    const followingUser =currentUser.following_users || [];
+    this.current_user = await this.storage.get('user');
+    const followingUser = this.current_user.followees || [];
 
-    this.UserService.listUsers(this.page, this.limit, this.query)
+    this.userService.listUsers(this.page, this.limit, this.query)
       .then((response: any) => {
-        console.log(response.users);
+
         if (response.users.length > 0) {
           const updateUser = response.users.map((user: any) => ({
               ...user,
               is_following: followingUser.some((followedUser: any) => followedUser.id = user.id)
           }))
-          this.users = [...this.users, ...response.users];
+          this.users = [...this.users, ...updateUser];
+
           this.page++;
+
         } else {
           this.hasMoreUsers = false;
         }
@@ -59,8 +63,27 @@ export class SearchUsersPage implements OnInit {
     this.loadUser();
   }
 
-  follow(userID: any) {
-    console.log("follow" + userID)
+  follow(followee_id: any) {
+
+    const user_id = this.current_user.id;
+    this.userService
+      .followUser(user_id, followee_id)
+      .then((data: any) => {
+        console.log(data);
+        this.users = this.users.map((user: any) => {
+          if (user.id == followee_id) {
+            return {
+              ...user,
+              is_following: true,
+            };
+          }
+          return user;
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
   }
 
   unfollow(userID: any) {
@@ -69,7 +92,7 @@ export class SearchUsersPage implements OnInit {
 
 
   toggleFollow(user: any) {
-    console.log(user);
+    
     if (user.is_following) {
       this.unfollow(user.id);
     }else{
@@ -77,6 +100,7 @@ export class SearchUsersPage implements OnInit {
     }
 
   }
+
 
 
 }

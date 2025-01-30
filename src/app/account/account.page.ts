@@ -39,6 +39,7 @@ export class AccountPage implements OnInit {
       .then((response: any) => {
         this.storage.set('user', response);
         this.user_data = response;
+        console.log(this.user_data)
       })
       .catch((error) => {
         console.log(error);

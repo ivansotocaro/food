@@ -2,6 +2,7 @@
   <ion-toolbar>
     <ion-buttons>
       <ion-menu-button></ion-menu-button>
+      <ion-title>Perfil</ion-title>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -9,7 +10,7 @@
 <ion-content class="ion-padding profile-page">
   <div class="profile-container">
     <ion-avatar class="profile-avatar" (click)="takePhone()">
-      <img [src]="user_data.image ?? 'assets/img/profile.png' " alt="imagen de perfil" />
+      <img [src]="user_data?.image ?? 'assets/img/profile.png' " alt="imagen de perfil" />
     </ion-avatar>
 
     <p class="profile-name">
@@ -21,16 +22,16 @@
     <div class="profile-stats">
       <div class="stat-item">
         <ion-label>Seguidores</ion-label>
-        <span>{{ user_data.followed_users.length }}</span>
+        <span>{{ user_data?.followers?.length }}</span>
       </div>
       <div class="stat-item">
-        <ion-label>Seguidos</ion-label>
-        <span>{{ user_data.following_users.length }}</span>
+        <ion-label>Siguiendo</ion-label>
+        <span>{{ user_data?.followees?.length }}</span>
       </div>
     </div>
 
     <ion-button expand="block" color="danger" (click)="editAccount()" >
-      Edit profile
+      Editar perfil
     </ion-button>
   </div>
 </ion-content>

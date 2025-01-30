@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar color="danger">
-    <ion-title>Edit Profile</ion-title>
+    <ion-title>Editar perfil</ion-title>
     <ion-buttons slot="end">
       <ion-button fill="clear" (click)="closeModal()">
         <ion-icon name="close-outline"></ion-icon>
@@ -15,13 +15,13 @@
     <!-- Circular Image Upload -->
     <div class="image-upload" (click)="uploadPhotoAccount()">
       <img [src]="accuont_image ?? 'assets/img/no-image.avif'" alt="Profile Image" class="profile-image" />
-      <p class="upload-text">Tap to upload image</p>
+      <p class="upload-text">Toque para cargar la imagen</p>
     </div>
 
     <!-- Name Field -->
 
     <ion-item lines="inset">
-      <ion-label position="floating">Name</ion-label>
+      <ion-label position="floating">Nombre</ion-label>
       <ion-input formControlName="name" [(ngModel)]="user.name"></ion-input>
     </ion-item>
 
@@ -35,7 +35,7 @@
 
     <!-- Lastname Field -->
     <ion-item lines="inset">
-      <ion-label position="floating">Last Name</ion-label>
+      <ion-label position="floating">Apellido</ion-label>
       <ion-input formControlName="last_name" [(ngModel)]="user.last_name"></ion-input>
     </ion-item>
 
@@ -56,7 +56,7 @@
           fill="solid"
           class="submit-button"
         >
-        Save Changes
+        Actualizar
       </ion-button>
     </ion-footer>
 

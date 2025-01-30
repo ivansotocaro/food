@@ -15,7 +15,7 @@
     <div class="form-container">
       <form [formGroup]="loginForm" (ngSubmit)="loginUser(loginForm.value)">
         <ion-item>
-          <ion-input label="Email" labelPlacement="floating" placeholder="Example@gmial.com" formControlName="email"></ion-input>
+          <ion-input label="Correo" labelPlacement="floating" placeholder="Example@gmial.com" formControlName="email"></ion-input>
         </ion-item>
 
         <div>
@@ -27,7 +27,7 @@
         </div>
 
         <ion-item>
-          <ion-input label="Password" type="password" labelPlacement="floating" placeholder="******" formControlName="password"></ion-input>
+          <ion-input label="Contraseña" type="password" labelPlacement="floating" placeholder="******" formControlName="password"></ion-input>
         </ion-item>
 
         <div>
@@ -39,7 +39,7 @@
         </div>
 
         <button type="submit" [disabled]="!loginForm.valid" class="login-button">
-          Login
+          Entrar
         </button>
       </form>
     </div>

@@ -41,7 +41,6 @@ export class UserService {
     const user_params = {
       user,
     };
-    console.log('funcion edit accon service');
 
     return new Promise((accept, reject) => {
       this.http
@@ -50,8 +49,6 @@ export class UserService {
         })
         .subscribe(
           (response: any) => {
-
-
             accept(response);
           },
           (error) => {
@@ -78,7 +75,6 @@ export class UserService {
         })
         .subscribe(
           (response: any) => {
-
             this.storage.set('user', response.user);
             accept(response);
           },
@@ -98,5 +94,36 @@ export class UserService {
   listUsers(page: number, perPage: number, query: string = '') {
     const url = `${this.urlServer}/list_users?page=${page}&per_page=${perPage}&query=${query}`;
     return this.http.get(url).toPromise();
+  }
+
+  // SEGUIR USUARIO
+  followUser(user_id: any, followee_id: any) {
+
+    const follow_params = {
+      followee_id
+    }
+
+    return new Promise((accept, reject) => {
+      this.http
+        .post(`${this.urlServer}/follow/${user_id}`, follow_params, {
+          headers: this.httpHeaders,
+        })
+        .subscribe(
+          (response: any) => {
+
+            accept(response);
+          },
+          (error) => {
+            console.log(error + ' error');
+
+            if (error.status === 500) {
+              reject('Error por favor intente mas tarde');
+            }
+
+            reject('Error al seguir usuario');
+          }
+        );
+    });
+
   }
 }

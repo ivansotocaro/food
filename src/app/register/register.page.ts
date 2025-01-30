@@ -17,20 +17,13 @@ import { NavController } from '@ionic/angular';
   standalone: false,
 })
 export class RegisterPage implements OnInit {
-
-  registerForm: FormGroup
+  registerForm: FormGroup;
   errorMessage: any;
 
   formErrors = {
-    user: [
-      { type: 'required', message: 'El usuario es obligatorio' },
-    ],
-    name: [
-      { type: 'required', message: 'El nombre es obligatorio' },
-    ],
-    lastname: [
-      { type: 'required', message: 'El apellido es obligatorio' },
-    ],
+    user: [{ type: 'required', message: 'El usuario es obligatorio' }],
+    name: [{ type: 'required', message: 'El nombre es obligatorio' }],
+    lastname: [{ type: 'required', message: 'El apellido es obligatorio' }],
     email: [
       { type: 'required', message: 'El correo es obligatorio' },
       { type: 'email', message: 'El correo no es valido' },
@@ -43,10 +36,14 @@ export class RegisterPage implements OnInit {
       },
     ],
     passwordConfirmation: [
-      { type: 'required', message: 'La confirmación de la contraseña es obligatoria' },
+      {
+        type: 'required',
+        message: 'La confirmación de la contraseña es obligatoria',
+      },
       {
         type: 'minlength',
-        message: 'La confirmación de la contraseña debe tener al menos 6 caracteres',
+        message:
+          'La confirmación de la contraseña debe tener al menos 6 caracteres',
       },
     ],
   };
@@ -56,7 +53,6 @@ export class RegisterPage implements OnInit {
     private authService: AuthService,
     private navCtrl: NavController
   ) {
-
     this.registerForm = this.formBuilder.group({
       user: ['', [Validators.required]],
       name: ['', [Validators.required]],
@@ -68,22 +64,25 @@ export class RegisterPage implements OnInit {
         [Validators.required, Validators.minLength(6)],
       ],
     });
-
   }
 
   ngOnInit() {}
 
   registerUser(credentials: any) {
-
-    this.authService.register(credentials).then((response) => {
-      console.log(response);
-      this.errorMessage = '';
-      this.navCtrl.navigateForward('/login');
-    }).catch((error) => {
-      console.log(error, ' error');
-      this.errorMessage = error;
-    });
-
+    this.authService
+      .register(credentials)
+      .then((response) => {
+        console.log(response);
+        this.errorMessage = '';
+        this.navCtrl.navigateForward('/login');
+      })
+      .catch((error) => {
+        console.log(error, ' error');
+        this.errorMessage = error;
+      });
   }
 
+  resetLogin(){
+    this.navCtrl.navigateForward('/login');
+  }
 }

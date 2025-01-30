@@ -72,7 +72,7 @@ export class RegisterPage implements OnInit {
     this.authService
       .register(credentials)
       .then((response) => {
-        console.log(response);
+      
         this.errorMessage = '';
         this.navCtrl.navigateForward('/login');
       })

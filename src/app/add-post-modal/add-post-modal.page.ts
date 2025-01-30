@@ -86,7 +86,7 @@ export class AddPostModalPage implements OnInit {
     this.postService
       .createPost(post_params)
       .then((response: any) => {
-        console.log(response);
+        
         response.user = {
           id: user.id,
           name: user.name,

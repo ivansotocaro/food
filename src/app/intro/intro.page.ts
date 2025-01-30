@@ -15,8 +15,8 @@ export class IntroPage implements OnInit {
 
   async finish() {
     try {
-      await this.storage.set('vilaintro', true); // Espera a que se guarde el valor
-      await this.router.navigateByUrl('/login'); // Espera a que la navegación se complete
+      await this.storage.set('vilaintro', true); 
+      await this.router.navigateByUrl('/login');
     } catch (error) {
       console.error('Error setting storage:', error);
     }

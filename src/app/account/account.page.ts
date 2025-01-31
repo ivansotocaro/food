@@ -101,7 +101,7 @@ export class AccountPage implements OnInit {
     this.userService
       .updateUser(this.user_data)
       .then((response: any) => {
-        console.log(response);
+        this.storage.set('user', response.user);
       })
       .catch((error) => {
         console.log(error);

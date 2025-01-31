@@ -72,7 +72,6 @@ export class EditAccountModalPage implements OnInit {
   async ngOnInit() {
     this.user = await this.storage.get('user');
     this.accuont_image = this.user.image;
-
     if (this.accuont_image) {
       this.editFormAccount.get('image')?.clearValidators();
       this.editFormAccount.get('image')?.updateValueAndValidity();

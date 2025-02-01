@@ -10,7 +10,7 @@
 
 <ion-content class="ion-padding">
   <form [formGroup]="addPostForm" (ngSubmit)="addPost(addPostForm.value)" class="form-container">
-    <div class="image-upload" (click)="uploadPhoto()">
+    <div class="image-upload" (click)="presentPhotoOptions()">
       <img [src]="post_image ?? 'assets/img/no-image.avif'" alt="Post image" class="post-image" />
       <p *ngIf="!post_image" class="upload-text">Click to upload an image</p>
     </div>

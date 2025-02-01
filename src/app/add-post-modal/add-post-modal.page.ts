@@ -15,7 +15,7 @@ import {
 import { defineCustomElements } from '@ionic/pwa-elements/loader';
 import { PostService } from '../services/post.service';
 import { Storage } from '@ionic/storage-angular';
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 
 
 
@@ -46,7 +46,8 @@ export class AddPostModalPage implements OnInit {
     private formBuilder: FormBuilder,
     private postService: PostService,
     private storage: Storage,
-    private modalController: ModalController
+    private modalController: ModalController,
+    public alertController: AlertController
   ) {
     this.addPostForm = this.formBuilder.group({
       description: new FormControl(
@@ -59,10 +60,10 @@ export class AddPostModalPage implements OnInit {
 
   ngOnInit() {}
 
-  async uploadPhoto() {
+  async uploadPhoto(source: CameraSource) {
     const uploadPhoto = await Camera.getPhoto({
       resultType: CameraResultType.DataUrl,
-      source: CameraSource.Photos,
+      source: source,
       quality: 100,
     });
 
@@ -70,6 +71,36 @@ export class AddPostModalPage implements OnInit {
     this.addPostForm.patchValue({
       image: this.post_image,
     });
+  }
+
+  async presentPhotoOptions() {
+    const alert = await this.alertController.create({
+      header: 'Seleccione una opción',
+      message: '¿De dónde desea obtener la imagen?',
+      buttons: [
+        {
+          text: 'Cámara',
+          handler: () => {
+            this.uploadPhoto(CameraSource.Camera);
+          },
+        },
+        {
+          text: 'Galeria',
+          handler: () => {
+            this.uploadPhoto(CameraSource.Photos);
+          },
+        },
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancelado');
+          },
+        },
+      ],
+    });
+
+    await alert.present();
   }
 
   async addPost(post_data: any) {
@@ -86,12 +117,11 @@ export class AddPostModalPage implements OnInit {
     this.postService
       .createPost(post_params)
       .then((response: any) => {
-        
         response.user = {
           id: user.id,
           name: user.name,
           image: user.image || 'assets/img/user.jpg',
-        }
+        };
         this.postService.postCreated.emit(response);
         this.addPostForm.reset();
         this.post_image = null;
